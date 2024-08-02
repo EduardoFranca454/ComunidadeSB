@@ -4,13 +4,20 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager   #gerenciador de login
+import os
 
 #Criação do APP:
 app = Flask(__name__)
 
 #Configurações do APP:
 app.config['SECRET_KEY'] = '070c393726f45336b9b86d1c62dcffb6'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comunidade.db'  #graças a essas 3 barras, o banco de dados será criado no mesmo lugar que nosso arquivo "main" está.
+
+#Isso quer dizer que: Se o nosso código estiver rodando em um servidor que está online, o nosso banco de dados será esse "os.getenv("DATABASE_URL")", caso contrário, caso o código esteja rodando no servidor local, o nosso banco de dados será aquele que já estávamos usando 'sqlite:///comunidade.db'
+#Ação necessária para darmos deploy no site
+if os.getenv("DATABASE_URL"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comunidade.db'  #graças a essas 3 barras, o banco de dados será criado no mesmo lugar que nosso arquivo "main" está.
 
 # Banco de Dados:
 database = SQLAlchemy(app)  #criação do banco de dados
