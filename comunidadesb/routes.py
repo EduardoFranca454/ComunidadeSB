@@ -17,11 +17,6 @@ def homepage():
     return render_template("homepage.html", posts=posts)
 
 
-# @app.route('/contato')
-# def contato():
-#     return render_template("contato.html")
-
-
 @app.route('/usuarios')
 @login_required
 def usuarios():
