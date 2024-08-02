@@ -1,0 +1,81 @@
+{% extends "perfil.html" %}
+
+
+{% block form_editar_perfil %}
+
+<div class="container">
+    <hr>
+    <div class="row" >
+        <div class="col" >
+            <form method="POST" action="" class="border p-3 mt-3" enctype="multipart/form-data">  <!-- enctype="multipart/form-data" = Toda vez que tivermos um formumário onde é possível o usuário carregar um arquivo (tipo mudar a foto de perfil), temos que usar esse método em questão -->
+                {{ form_editar_perfil.csrf_token }}  <!-- ativando a secret key -->
+                <legend style="text-align: center">Editar Perfil</legend>
+                <fieldset>
+                    <div class="form-group">
+                        {{ form_editar_perfil.username.label(class="form-control-label") }}
+
+                        {% if form_editar_perfil.username.errors %}
+                            {{ form_editar_perfil.username(class="form-control is-invalid") }} <!-- "is-invalid" nos permite colocar a nossa condição dentro de uma div -->
+                        <div class="invalid-feedback">
+                            {% for erro in form_editar_perfil.username.errors %}
+                                {{ erro }}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form_editar_perfil.username(class="form-control") }} <!-- formulário normal, para caso não tenha nenhum erro -->
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form_editar_perfil.email.label(class="form-control-label") }}
+
+                        {% if form_editar_perfil.email.errors %}
+                            {{ form_editar_perfil.email(class="form-control is-invalid") }} <!-- "is-invalid" nos permite colocar a nossa condição dentro de uma div -->
+                        <div class="invalid-feedback">
+                            {% for erro in form_editar_perfil.email.errors %}
+                                {{ erro }}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form_editar_perfil.email(class="form-control") }} <!-- formulário normal, para caso não tenha nenhum erro -->
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <br>    <!-- <br> = break (pula uma linha no HTML) -->
+                        {{ form_editar_perfil.foto_perfil.label }}<br>
+                        {{ form_editar_perfil.foto_perfil(class="form-control-file") }}
+                        {% if form_editar_perfil.foto_perfil.errors %}  <!-- se tem algum erro no campo de foto_perfil -->
+                            {% for erro in form_editar_perfil.foto_perfil.errors %}
+                                <span class="text-danger">{{ erro }}</span><br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <br>
+                    <h6>Posições</h6>
+                      <div class="form-group">
+                        {{ form_editar_perfil.posicao_goleiro(class="form-check-input me-1") }}
+                        {{ form_editar_perfil.posicao_goleiro.label(class="form-check-label") }}
+                    </div>
+
+                     <div class="form-group">
+                        {{ form_editar_perfil.posicao_fixo(class="form-check-input me-1") }}
+                        {{ form_editar_perfil.posicao_fixo.label(class="form-check-label")  }}
+                    </div>
+
+                     <div class="form-group">
+                        {{ form_editar_perfil.posicao_ala(class="form-check-input me-1") }}
+                        {{ form_editar_perfil.posicao_ala.label(class="form-check-label")  }}
+                    </div>
+
+                     <div class="form-group">
+                        {{ form_editar_perfil.posicao_pivo(class="form-check-input me-1") }}
+                        {{ form_editar_perfil.posicao_pivo.label(class="form-check-label")  }}
+                    </div>
+
+                </fieldset>
+                {{ form_editar_perfil.botao_submit_editarperfil(class="btn btn-primary mt-2") }}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

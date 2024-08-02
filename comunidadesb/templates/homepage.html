@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h1 style="color: rgba(255,145,0,0.57); text-align: center"> Comunidade SB</h1>
+        <hr>
+        {% for post in posts %}
+            <div class="row border mt-3 p-3" style="background-color: rgba(128,128,128,0.12)">
+                <div class="col col-3" style="text-align: center">
+                     <div class="image pe-2">
+                        <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil))}}" class="rounded" width="200" >
+                    </div>
+                    <strong> {{ post.autor.username }} </strong>
+                </div>
+                <div class="col col-9">
+                    <a style="text-decoration: none" href="{{ url_for('exibir_post', post_id=post.id) }}">
+                        <h3>{{ post.titulo }} </h3>
+                    </a>
+                    <p> {{ post.corpo}} </p>
+                </div>
+
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container mt-3">
+            <div class="row border mt-3 p-3" style="background-color: rgba(128,128,128,0.12)">
+                <div class="col col-3" style="text-align: center">
+                     <div class="image pe-2">
+                        <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil))}}" class="rounded" width="200" >
+                    </div>
+                    <strong> {{ post.autor.username }} </strong>
+                </div>
+                <div class="col col-7">
+                    <h3>{{ post.titulo }}</h3>
+                    <p> {{ post.corpo}} </p>
+                </div>
+                <div class="col col-2 d-flex flex-column">  <!-- Peguei essas classes no GPT. Elas colocaram, juntamente com a classe aplicada na "div" de baixo ("mt-auto"), o botão de excluir o post na parte de baixo da coluna do HTML -->
+                    <small class="text-muted" style="font-size: 15px"> Data de Criação: {{ post.data_criacao.strftime('%d/%m/%Y')}}</small>
+                    {% if form %}
+                    <div class="mt-auto">
+                        <p style="text-align: right">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#ExcluirPost" class="btn btn-secondary">
+                                Excluir Post
+                            </a>  <!-- quando estamos fazendo um popup que irá aparecer no site, não precisamos passar um link de fato no "href", podemos passar apenas '#' -->
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+
+<!-- Formulário de Edição de Post -->
+<br>
+{% if form %}  <!-- o formulário de edição de post só irá aparecer caso o usuário atual do site seja o próprio autor do post  -->
+<div class="container">
+    <div class="row" >
+        <div class="col" >
+            <form method="POST" action="" id="form_editarpost" class="border p-3 mt-3">  <!-- enctype="multipart/form-data" = Toda vez que tivermos um formumário onde é possível o usuário carregar um arquivo (tipo mudar a foto de perfil), temos que usar esse método em questão -->
+                {{ form.csrf_token }}  <!-- ativando a secret key -->
+                <h3 style="text-align: center">Editar Post</h3>
+                <fieldset>
+                    <div class="form-group">
+                        {{ form.titulo.label(class="form-control-label") }}
+
+                        {% if form.titulo.errors %}
+                            {{ form.titulo(class="form-control is-invalid") }} <!-- "is-invalid" nos permite colocar a nossa condição dentro de uma div -->
+                        <div class="invalid-feedback">
+                            {% for erro in form.titulo.errors %}
+                                {{ erro }}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form.titulo(class="form-control") }} <!-- formulário normal, para caso não tenha nenhum erro -->
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.corpo.label(class="form-control-label") }}
+
+                        {% if form.corpo.errors %}
+                            {{ form.corpo(class="form-control is-invalid") }} <!-- "is-invalid" nos permite colocar a nossa condição dentro de uma div -->
+                        <div class="invalid-feedback">
+                            {% for erro in form.corpo.errors %}
+                                {{ erro }}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form.corpo(class="form-control") }} <!-- formulário normal, para caso não tenha nenhum erro -->
+                        {% endif %}
+                    </div>
+                </fieldset>
+                {{ form.botao_submit_criarpost(class="btn btn-primary mt-2") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<!-- PopUp (Modal) que irá aparecer quando o usuário apertar em Excluir Post -->
+<div class="modal fade" id="ExcluirPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente excluir esse post?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <form method="POST" action="{{ url_for('excluir_post', post_id=post.id) }}">
+              <button type="submit" class="btn btn-danger">Excluir</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

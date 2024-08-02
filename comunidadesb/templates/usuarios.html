@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h1 style="color: rgba(255,145,0,0.57); text-align: center">Membros SB</h1>
+        <hr>
+        {% for usuario in lista_usuarios %}
+
+            <div class="container mt-5 d-flex justify-content-center">
+            <div class="card p-3">
+                <div class="d-flex align-items-center">
+                        <div class="image pe-2">
+                                <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(usuario.foto_perfil)) }}" class="rounded" width="200" >
+                        </div>
+                        <div class="ml-3 w-100">
+                           <h4 class="mb-0 mt-0">{{ usuario.username }}</h4>
+                           <div class="p-2 mt-2 bg-primary justify-content-between rounded text-white stats">
+                                <div class="d-flex flex-column">
+                                        <span class="articles">Posição</span>
+                                        <span class="number1">{{ usuario.posicoes }}</span>
+    
+                                    <div class="d-flex flex-column">
+                                        <span class="rating">Posts</span>
+                                        <span class="number3">{{ usuario.contar_posts() }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            </div>
+        
+
+        {% endfor %} <!-- finalizando o for -->
+    </div>
+<div class="row mt-5">
+</div>
+{% endblock %}

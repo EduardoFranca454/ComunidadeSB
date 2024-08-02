@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="row" >
+        <div class="col" >
+            <form method="POST" action="" class="border p-3 mt-3">  <!-- enctype="multipart/form-data" = Toda vez que tivermos um formumário onde é possível o usuário carregar um arquivo (tipo mudar a foto de perfil), temos que usar esse método em questão -->
+                {{ form_criarpost.csrf_token }}  <!-- ativando a secret key -->
+                <h3 style="text-align: center">Criar Post</h3>
+                <fieldset>
+                    <div class="form-group">
+                        {{ form_criarpost.titulo.label(class="form-control-label") }}
+
+                        {% if form_criarpost.titulo.errors %}
+                            {{ form_criarpost.titulo(class="form-control is-invalid") }} <!-- "is-invalid" nos permite colocar a nossa condição dentro de uma div -->
+                        <div class="invalid-feedback">
+                            {% for erro in form_criarpost.titulo.errors %}
+                                {{ erro }}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form_criarpost.titulo(class="form-control") }} <!-- formulário normal, para caso não tenha nenhum erro -->
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form_criarpost.corpo.label(class="form-control-label") }}
+
+                        {% if form_criarpost.corpo.errors %}
+                            {{ form_criarpost.corpo(class="form-control is-invalid") }} <!-- "is-invalid" nos permite colocar a nossa condição dentro de uma div -->
+                        <div class="invalid-feedback">
+                            {% for erro in form_criarpost.corpo.errors %}
+                                {{ erro }}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            {{ form_criarpost.corpo(class="form-control") }} <!-- formulário normal, para caso não tenha nenhum erro -->
+                        {% endif %}
+                    </div>
+                </fieldset>
+                {{ form_criarpost.botao_submit_criarpost(class="btn btn-primary mt-2") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
