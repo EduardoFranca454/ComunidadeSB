@@ -5,7 +5,7 @@ O que o projeto faz?
 - O projeto em questão se trata de um blog interativo. Um lugar onde os usuários conseguem se relacionar através de postagens. 
 
 Por que o projeto é útil
-- A ComunidadeSB tem como objetivo principal o lazer e entretenimento de seus membros. Apesar de ser um projeto "simples", seu intuito é a interação as entre pessoas e o divertimento das mesmas.
+- A ComunidadeSB tem como objetivo principal o lazer e entretenimento de seus membros. Apesar de ser um projeto "simples", seu intuito é a interação entre as pessoas e o divertimento das mesmas.
 
 Como os usuários podem começar a usar o projeto?
 - Pode ser usado pelos desenvolvedores que possuem interesse em: criar uma ferramenta que permita interação entre usuários; um sistema completo de cadastro (com criação de conta e login); utilização de bancos de dados relacional; privacidade de determinadas páginas (apenas usuários logados conseguem ter acesso); entre outros.
